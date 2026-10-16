@@ -1,0 +1,47 @@
+# ===== Godot =====
+# Katalog z cache/stanem edytora oraz importowane zasoby — każdy generuje go sam.
+.godot/
+/android/
+# Pliki tłumaczeń generowane z CSV.
+*.translation
+
+# Wyeksportowane (zbudowane) wersje gry.
+/build/
+/Exports/
+/export/
+
+# ===== C# / .NET =====
+# Artefakty kompilacji (Godot domyślnie trzyma je w .godot/mono/temp, ale
+# `dotnet build` z terminala może utworzyć je również tutaj).
+bin/
+obj/
+*.csproj.user
+*.csproj.old*
+*.sln.DotSettings.user
+*.suo
+*.user
+*.ntvs*
+*.njsproj
+*.sln.docstats
+
+# ===== Edytory / IDE =====
+# Każdy konfiguruje swój edytor lokalnie — nie wrzucamy ustawień IDE do repo.
+.vs/
+.idea/
+.vscode/
+*.swp
+*.sublime-*
+
+# ===== Systemy operacyjne =====
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+*~
+
+# ===== Lokalne śmieci =====
+*.log
+*.tmp
