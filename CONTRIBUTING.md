@@ -116,11 +116,10 @@ Zasady:
 ### Commity
 
 - **Jeden commit = jedna logiczna zmiana.** Commitujemy małymi krokami, żeby z diffu dało się przeczytać, co się stało i dlaczego.
-- **Komunikat po polsku, w trybie rozkazującym** („Dodaj ruch gracza w osi X”, nie „dodałem”, „zmiany”, „fix”, „poprawki”, „update”).
+- **Jasny komunikat w trybie rozkazującym** („Dodaj ruch gracza w osi X”, nie „dodałem”, „zmiany”, „fix”, „poprawki”, „update”).
 - **Pierwsza linia to sedno zmiany.** Jeśli potrzebujesz więcej miejsca, po pustej linii dopisz szczegóły (co i dlaczego).
 - Do commita trafia tylko to, co chcesz wysłać: `git add` konkretnych plików zamiast `git add .` w ciemno. Przed commitem zerknij na `git status` i `git diff --staged`.
-- **Nie commitujemy** plików z `.godot/`, `bin/`, `obj/`, wyeksportowanych buildów, sekretów i lokalnych ścieżek.
-- Po rozpoczęciu review **nie przepisujemy historii** (żadnego force-pusha) — poprawki idą nowymi commitami.
+- **Nie commitujemy** plików z `.godot/`, `bin/`, `obj/`, wyeksportowanych buildów, sekretów i lokalnych ścieżek (.gitignore powinno to obejmować).
 - Na `main` trafia jeden commit na PR (**Squash and merge**), dlatego tytuł PR-a piszemy tak, jak ma wyglądać komunikat tego commita.
 
 ## Pull request — wymagania
@@ -137,20 +136,6 @@ Każdy PR musi mieć:
 
 GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md)) — nie musisz go kopiować ręcznie.
 
-```markdown
-## Co
-<!-- Co się zmieniło, w jednym akapicie. -->
-
-## Dlaczego
-<!-- Po co to robimy. Powiązane issue: Closes #123 -->
-
-## Jak testować
-1. ...
-2. ...
-
-## Zrzuty / nagrania
-<!-- Dla zmian widocznych w UI. -->
-
 ## Checklist
 - [ ] CI jest zielone (`Build / dotnet build`) i lokalnie `dotnet build` przechodzi bez błędów
 - [ ] Sprawdzone ręcznie w Godocie (opisałem powyżej, co sprawdziłem)
@@ -159,7 +144,6 @@ GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL
 - [ ] Jeśli użyłem AI do kodu — oznaczyłem to w kodzie (`AI-GENERATED`) i w tym opisie
 - [ ] Zaktualizowałem dokumentację, jeśli zmiana tego wymaga
 - [ ] PR ma **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej**
-```
 
 ### Merge
 

@@ -1,4 +1,3 @@
-# AI-GENERATED: GitHub Copilot — workflow CI budujący projekt .NET przy każdym PR i pushu do main
 name: Build
 
 on:
