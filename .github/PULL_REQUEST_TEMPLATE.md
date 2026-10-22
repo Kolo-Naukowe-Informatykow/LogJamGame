@@ -24,4 +24,4 @@
 - [ ] Jeśli dodałem zewnętrzny asset — wpisałem go do [Assets/CREDITS.md](../Assets/CREDITS.md) (autor, źródło, licencja)
 - [ ] Jeśli użyłem AI do kodu — oznaczyłem to w kodzie (`AI-GENERATED`) i w tym opisie
 - [ ] Zaktualizowałem dokumentację, jeśli zmiana tego wymaga
-- [ ] PR ma **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej** (autor nie zatwierdza własnego PR-a)
+- [ ] PR ma **2 zatwierdzenia**, w tym **co najmniej jedno od code ownera** (członka zespołu `maintainers`)
