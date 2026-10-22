@@ -1,0 +1,206 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Którą część numeru wersji podnieść (push do main zawsze podbija patch)"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: "4.7.2"
+  DOTNET_VERSION: "8.0.x"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  release:
+    name: Zbuduj i opublikuj wydanie
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Godot
+        uses: chickensoft-games/setup-godot@v2.4.3
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: true
+          include-templates: true
+
+      - name: Oblicz numer wersji
+        id: version
+        env:
+          BUMP: ${{ inputs.bump || 'patch' }}
+        run: |
+          set -euo pipefail
+
+          latest="$(git for-each-ref --sort=-v:refname --count=1 --format='%(refname:short)' 'refs/tags/v*')"
+
+          if [ -n "$latest" ] && [[ ! "$latest" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Najnowszy tag $latest nie wygląda na wersję vX.Y.Z."
+            exit 1
+          fi
+
+          if [ -n "$latest" ] && [ "$(git rev-list -n1 "$latest")" = "$(git rev-parse HEAD)" ]; then
+            version="${latest#v}"
+            previous="$(git describe --tags --abbrev=0 --match 'v[0-9]*' "${latest}^" 2>/dev/null || true)"
+            echo "Ten commit jest już otagowany jako $latest — wznawiam wydanie."
+          else
+            if [ -z "$latest" ]; then
+              version="0.1.0"
+            else
+              IFS=. read -r major minor patch <<< "${latest#v}"
+
+              case "$BUMP" in
+                major) major=$((major + 1)); minor=0; patch=0 ;;
+                minor) minor=$((minor + 1)); patch=0 ;;
+                patch) patch=$((patch + 1)) ;;
+                *)
+                  echo "::error::Nieznany typ podbicia wersji: $BUMP"
+                  exit 1
+                  ;;
+              esac
+
+              version="$major.$minor.$patch"
+            fi
+
+            previous="$latest"
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          echo "previous=$previous" >> "$GITHUB_OUTPUT"
+          echo "Wersja: v$version (poprzednie wydanie: ${previous:-brak})"
+
+      - name: Wstaw wersję do project.godot
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          if grep -q '^config/version=' project.godot; then
+            sed -i "s|^config/version=.*|config/version=\"$VERSION\"|" project.godot
+          else
+            sed -i "/^config\/name=/a config/version=\"$VERSION\"" project.godot
+          fi
+
+          grep '^config/version=' project.godot
+
+      - name: Włącz import ETC2/ASTC (wymagane dla macOS)
+        run: |
+          set -euo pipefail
+
+          if grep -q '^textures/vram_compression/import_etc2_astc=' project.godot; then
+            sed -i 's|^textures/vram_compression/import_etc2_astc=.*|textures/vram_compression/import_etc2_astc=true|' project.godot
+          else
+            sed -i '/^\[rendering\]/a textures/vram_compression/import_etc2_astc=true' project.godot
+          fi
+
+          grep '^textures/vram_compression/import_etc2_astc=' project.godot
+
+      - name: Ostrzeż o braku sceny głównej
+        run: |
+          if ! grep -q '^run/main_scene=' project.godot; then
+            echo "::warning::Brak sceny głównej (application/run/main_scene) — buildy powstaną, ale gra się nie uruchomi."
+          fi
+
+      - name: Importuj zasoby
+        run: godot --headless --path . --import
+
+      - name: Eksportuj buildy
+        run: |
+          set -euo pipefail
+
+          mkdir -p dist/windows dist/linux dist/macos
+
+          godot --headless --path . --export-release "Windows Desktop" "dist/windows/LogJamGame.exe"
+          godot --headless --path . --export-release "Linux" "dist/linux/LogJamGame.x86_64"
+          godot --headless --path . --export-release "macOS" "dist/macos/LogJamGame.zip"
+
+      - name: Spakuj buildy
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          for platform in windows linux; do
+            cp Assets/CREDITS.md "dist/$platform/CREDITS.md"
+            if [ -d Assets/Licenses ]; then
+              cp -r Assets/Licenses "dist/$platform/Licenses"
+            fi
+          done
+
+          rm -rf package
+          mkdir -p package
+          mv dist/windows "package/LogJamGame-${VERSION}-windows-x86_64"
+          mv dist/linux "package/LogJamGame-${VERSION}-linux-x86_64"
+
+          ( cd package && zip -qr "../LogJamGame-${VERSION}-windows-x86_64.zip" "LogJamGame-${VERSION}-windows-x86_64" )
+          ( cd package && zip -qr "../LogJamGame-${VERSION}-linux-x86_64.zip" "LogJamGame-${VERSION}-linux-x86_64" )
+
+          ( cd dist/macos && zip -qj LogJamGame.zip "$GITHUB_WORKSPACE/Assets/CREDITS.md" )
+          if [ -d Assets/Licenses ]; then
+            ( cd Assets && zip -qr "../dist/macos/LogJamGame.zip" Licenses )
+          fi
+          mv dist/macos/LogJamGame.zip "LogJamGame-${VERSION}-macos-universal.zip"
+
+          sha256sum LogJamGame-*.zip > SHA256SUMS.txt
+          ls -lh LogJamGame-*.zip SHA256SUMS.txt
+
+      - name: Wygeneruj changelog
+        env:
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          bash .github/scripts/generate-changelog.sh "$PREVIOUS" "$VERSION" "$TAG" > release-notes.md
+          cat release-notes.md
+
+      - name: Opublikuj wydanie
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" LogJamGame-*.zip SHA256SUMS.txt --clobber
+            gh release edit "$TAG" --title "LogJamGame $TAG" --notes-file release-notes.md
+          elif git rev-parse "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" LogJamGame-*.zip SHA256SUMS.txt \
+              --title "LogJamGame $TAG" \
+              --notes-file release-notes.md
+          else
+            gh release create "$TAG" LogJamGame-*.zip SHA256SUMS.txt \
+              --target "$GITHUB_SHA" \
+              --title "LogJamGame $TAG" \
+              --notes-file release-notes.md
+          fi

@@ -2,16 +2,14 @@
 
 This repository is a **collaborative learning project**: a game built in **Godot 4.7.2 (.NET) with C#** (`net8.0`) by members of a university computer science club. Most contributors are beginners who are learning the engine, the language, and Git/GitHub workflow.
 
+
 Authoritative documents (read them before making changes):
 
 - [README.md](README.md) — what the project is, how the team works
-- [SETUP.md](SETUP.md) — tooling, running the project, troubleshooting
-- [CONTRIBUTING.md](CONTRIBUTING.md) — task board, PR rules, review, testing, AI policy
-- [CODE_STYLE.md](CODE_STYLE.md) — naming, formatting, Godot conventions, AI marker syntax
+- [docs/SETUP.md](docs/SETUP.md) — tooling, running the project, troubleshooting
+- [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) — task board, PR rules, review, testing, AI policy
+- [docs/CODE_STYLE.md](docs/CODE_STYLE.md) — naming, formatting, Godot conventions, AI marker syntax
 
-## Communicate in Polish
-
-Always answer the user in **Polish**, regardless of the language of the code or of this file.
 
 ## Prime directive: this is a learning project
 
@@ -23,7 +21,7 @@ Always answer the user in **Polish**, regardless of the language of the code or 
 
 ## Mandatory: mark every line of AI-written code
 
-Code you write must be marked in the source, exactly as described in [CODE_STYLE.md](CODE_STYLE.md#znacznik-kodu-napisany-przez-ai):
+Code you write must be marked in the source, exactly as described in [docs/CODE_STYLE.md](docs/CODE_STYLE.md#znacznik-kodu-napisany-przez-ai):
 
 - Single method or short block:
 
@@ -49,6 +47,7 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 - **Never generate or add assets**: images, sprites, icons, textures, audio, music, 3D models, fonts, animations. Do not generate them with AI tools, do not download stock assets, and do not modify existing asset files. If asked, refuse and explain the project policy (assets must come from free-licensed sources with a documented license, or be made by contributors).
 - Never commit secrets, tokens, or local machine paths.
 - Never push directly to `main`, never force-push a shared branch, never merge a pull request (2 approvals are required, at least one from a maintainer).
+- Create branches from issues and keep GitHub's default name `<issue-number>-<slug>` (e.g. `6-temporary-test-scene`). The `issue-branch` check is advisory: it warns about naming or issue problems but does not block merges.
 - Do not change project scaffolding — `LogJamGame.csproj`, `LogJamGame.sln`, `project.godot`, the assembly/namespace name, or the folder layout — unless explicitly asked.
 - Do not hand-edit `.tscn`, `.tres` or `project.godot` files. Describe the exact editor steps instead (node path, property, value), so a human performs it in the Godot editor.
 - Do not add NuGet packages or new tooling without asking first.
@@ -56,7 +55,7 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 ## Coding rules
 
-- Follow [CODE_STYLE.md](CODE_STYLE.md) and `.editorconfig` (4 spaces, LF, Allman braces, file-scoped namespaces).
+- Follow [docs/CODE_STYLE.md](docs/CODE_STYLE.md) and `.editorconfig` (4 spaces, LF, Allman braces, file-scoped namespaces).
 - PascalCase for folders, files, scenes and classes; `_camelCase` for private fields; camelCase for locals and parameters; English identifiers; Polish comments.
 - Namespace mirrors the folder path below `Source/`: `Source/Components/HealthBar.cs` → `namespace LogJamGame.Components;`.
 - Every class deriving from `Node` must be `partial`.

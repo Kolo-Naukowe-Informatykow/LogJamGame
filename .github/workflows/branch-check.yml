@@ -1,0 +1,57 @@
+name: Branch check
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  issue-branch:
+    name: issue-branch
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Sprawdź nazwę gałęzi i powiązane issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.head_ref }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -uo pipefail
+
+          pattern='^([0-9]+)-[^/]+$'
+
+          if [ -z "${BRANCH:-}" ]; then
+            echo "::warning::Nie udało się odczytać nazwy gałęzi (github.head_ref jest puste)."
+            exit 0
+          fi
+
+          if [[ ! "$BRANCH" =~ $pattern ]]; then
+            echo "::warning::Nazwa gałęzi '$BRANCH' nie przypomina domyślnej nazwy GitHuba. Zalecany format: <numer>-<nazwa-z-myslnikami>, np. 6-temporary-test-scene."
+            exit 0
+          fi
+
+          number="${BASH_REMATCH[1]}"
+
+          if ! issue="$(gh api "repos/$REPO/issues/$number" 2>/dev/null)"; then
+            echo "::warning::Nie udało się pobrać issue #$number. Upewnij się, że gałąź powstała z issue w $REPO."
+            exit 0
+          fi
+
+          state="$(jq -r '.state // empty' <<< "$issue")"
+          type="$(jq -r '.type.name // empty' <<< "$issue")"
+
+          if [ "$state" != "open" ]; then
+            echo "::warning::Issue #$number nie jest otwarte (state: ${state:-brak})."
+            exit 0
+          fi
+
+          if [ "$type" != "Bug" ] && [ "$type" != "Feature" ]; then
+            echo "::warning::Issue #$number ma typ '${type:-brak}'. Oczekiwano typu Bug albo Feature."
+            exit 0
+          fi
+
+          echo "OK: $BRANCH → issue #$number ($type)"

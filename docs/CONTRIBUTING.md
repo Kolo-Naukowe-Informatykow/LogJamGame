@@ -26,19 +26,25 @@ Repozytorium ma uczyć pracy w zespole, dlatego część zasad (review, issue, t
 
 1. Uruchom projekt u siebie: [SETUP.md](SETUP.md).
 2. Przeczytaj [CODE_STYLE.md](CODE_STYLE.md) — tam są zasady pisania kodu i nazewnictwa.
-3. Dołącz do **Discorda koła**. Tam zadajemy pytania „jak to zrobić”, a issues służą do konkretów (błąd, zadanie, decyzja).
+3. Dołącz do **Discorda koła**. Tam zadajemy pytania „jak to zrobić”, a issues służą do konkretów (błąd, funkcja, decyzja).
 4. Sprawdź, czy masz uprawnienia do przypisywania się do zadań na tablicy. Jeśli nie — napisz na Discordzie.
 
 **Nie musisz umieć programować.** Potrzebujemy też osób do testów, dokumentacji, assetów i porządkowania zadań. Zaczynasz od zadania oznaczonego `good first issue`.
 
 ## Zadania i tablica
 
-Zadania żyją na **[tablicy GitHub Projects](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects/6)** projektu. Kolumny:
+Zadania żyją na **[tablicy GitHub Projects](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects/6)** projektu. Każde zadanie to issue typu **Bug** albo **Feature** — nie ma osobnego typu „Task”. Typ Task jest wyłączany w ustawieniach organizacji; jeśli nadal widzisz go w formularzu, poproś właściciela organizacji o jego wyłączenie.
+
+Nowe issue tworzymy wyłącznie przez szablony w [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/). Szablon ustawia właściwy typ (Bug/Feature) i podpowiada, co warto dopisać — wymagany jest tylko krótki opis. Puste issue jest wyłączone. Projekt ma włączony **auto-add**, więc nowe issue z repozytorium trafiają na tablicę automatycznie.
+
+Główny widok tablicy to **Kanban**. Są też widoki: *Priority board*, *Team items*, *Roadmap* i *My items* (filtr `assignee:@me`).
+
+Kolumny:
 
 | Kolumna | Znaczenie |
 |---|---|
 | **Backlog** | Pomysły i zadania jeszcze niegotowe do podjęcia |
-| **Todo** | Zadanie gotowe do wzięcia: ma opis, zakres i kryteria akceptacji |
+| **Ready** | Zadanie gotowe do wzięcia: ma opis, zakres i kryteria akceptacji |
 | **In progress** | Ktoś nad nim pracuje (przypisany assignee) |
 | **In review** | Otwarty pull request, trwa review |
 | **Testing** | Zmiana zatwierdzona, ktoś ją testuje na swoim komputerze |
@@ -53,25 +59,25 @@ Zasady:
 
 ## Zgłaszanie błędów (issue)
 
-Znalazłeś błąd? **Załóż issue.** Nie naprawiamy błędów „przy okazji” — także dlatego, że to zadanie dla kogoś, kto chce się nauczyć.
+Znalazłeś błąd? **Załóż issue z szablonu Bug.** Nie naprawiamy błędów „przy okazji” — także dlatego, że to zadanie dla kogoś, kto chce się nauczyć.
 
 Zanim założysz issue, sprawdź, czy ktoś już go nie zgłosił (przeszukaj issues po słowach kluczowych).
 
-W issue podaj:
+Wystarczy krótki opis błędu. Jeśli możesz, dopisz też:
 
-- **Co się stało** i co powinno się stać.
-- **Kroki do powtórzenia** — numerowana lista, najlepiej od uruchomienia gry.
-- **Jak często** — zawsze, za każdym razem po X, tylko czasem.
-- **Środowisko** — system, wersja Godota (4.7.2), numer commita lub gałęzi.
-- **Materiały** — zrzut ekranu, log z okna *Output*, treść błędu z konsoli.
+- co powinno się stać,
+- kroki do powtórzenia (numerowana lista, najlepiej od uruchomienia gry),
+- jak często występuje,
+- środowisko (system, wersja Godota 4.7.2, numer commita lub gałęzi),
+- materiały (zrzut ekranu, log z okna *Output*, treść błędu z konsoli).
 
-Etykiety: `bug`, `feature`, `docs`, `good first issue`, `help wanted`, `question`.
+Etykiety: `bug`, `enhancement`, `documentation`, `good first issue`, `help wanted`, `question`. Typ issue (Bug/Feature) to osobne pole — nie myl go z etykietą.
 
 Jeśli chcesz sam naprawić zgłoszony błąd — napisz to w komentarzu pod issue i przypisz się. Unikniemy wtedy sytuacji, w której dwie osoby robią to samo.
 
 ## Propozycje nowych rzeczy
 
-Pomysł na funkcję, ulepszenie albo usprawnienie repo? Załóż **issue z opisem pomysłu** i poczekaj na akceptację (komentarz od osoby nadzorującej projekt lub decyzja na spotkaniu).
+Pomysł na funkcję, ulepszenie albo usprawnienie repo? Załóż **issue z szablonu Feature** i poczekaj na akceptację (komentarz od osoby nadzorującej projekt lub decyzja na spotkaniu). Wystarczy krótki opis pomysłu — reszta pól jest opcjonalna.
 
 To nie jest biurokracja dla samej siebie: dzięki temu nie powstają duże PR-y, których nie da się przyjąć, bo nie pasują do konceptu gry lub dublują czyjąś pracę.
 
@@ -82,8 +88,9 @@ To nie jest biurokracja dla samej siebie: dzięki temu nie powstają duże PR-y,
 git switch main
 git pull
 
-# 2. Utwórz gałąź dla zadania
-git switch -c feature/krotki-opis
+# 2. Utwórz gałąź z issue na tablicy (przycisk „Create a branch”)
+#    GitHub zaproponuje nazwę <numer>-<tytuł-z-myslnikami>; możesz ją zostawić:
+git switch -c 6-temporary-test-scene
 
 # 3. Pracuj i commituj małymi krokami
 git add .
@@ -93,21 +100,19 @@ git commit -m "Dodaj ruch gracza w osi X"
 dotnet build
 
 # 5. Wypchnij gałąź i otwórz pull request
-git push -u origin feature/krotki-opis
+git push -u origin 6-temporary-test-scene
 ```
 
-Nazwy gałęzi:
+Nazwa gałęzi:
 
-| Prefiks | Do czego |
-|---|---|
-| `feature/...` | nowa funkcjonalność |
-| `fix/...` | naprawa błędu |
-| `docs/...` | dokumentacja |
-| `refactor/...` | porządki w kodzie bez zmiany działania |
-| `chore/...` | konfiguracja, narzędzia, repozytorium |
+| Format | Skąd | Przykład |
+|---|---|---|
+| `<numer>-<nazwa-z-myslnikami>` | numer issue + tytuł issue, spacje zamienione na myślniki | `6-temporary-test-scene` |
 
 Zasady:
 
+- **Zalecana jest domyślna nazwa GitHuba** — dokładnie taka, jaką proponuje przycisk **Create a branch** na karcie issue: `<numer>-<tytuł-z-myslnikami>`. Nie musisz jej zmieniać.
+- **Gałąź najlepiej tworzyć z issue** — wtedy numer jest w nazwie, a GitHub linkuje gałąź do issue. Check `issue-branch` sprawdza, czy numer wskazuje na istniejące, otwarte issue typu Bug albo Feature. Jeśli nie, wyświetla **ostrzeżenie**, ale nie blokuje merge'a.
 - **Nigdy nie pushujemy bezpośrednio do `main`.** Zawsze gałąź + pull request.
 - Jeden PR = jedna rzecz. Drobne poprawki z review dopisujemy do tego samego PR-a, ale nie dokładamy do niego przypadkowych innych zadań.
 - Jeśli `main` poszedł naprzód, zaktualizuj swoją gałąź (`git pull --rebase origin main`) i rozwiąż konflikty u siebie, przed merge.
@@ -128,16 +133,18 @@ Każdy PR musi mieć:
 
 - **Minimum 2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt** (bardziej doświadczonej). Autor nie zatwierdza własnego PR-a i nie merge'uje go bez wymaganych zatwierdzeń — nawet przy zmianie „jednej linijki”.
 - **Powiązanie z issue** — w opisie `Closes #123` albo `Refs #123`, żeby zadanie zamknęło się po merge'u.
+- **Nazwa gałęzi** — zalecany format `<numer>-<nazwa-z-myslnikami>` (domyślna nazwa GitHuba). Check `issue-branch` tylko ostrzega, jeśli nie da się powiązać gałęzi z issue.
 - **Opis** wypełniony według poniższego szablonu.
 - **Zielony build** — `dotnet build` bez błędów i bez nowych ostrzeżeń, potwierdzony przez CI (patrz [Automatyczny build (CI)](#automatyczny-build-ci)).
 - **Brak plików, których nie powinno być**: `.godot/`, `bin/`, `obj/`, wyeksportowane buildy, lokalne ścieżki, sekrety.
 
 ### Szablon opisu PR
 
-GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md)) — nie musisz go kopiować ręcznie.
+GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md)) — nie musisz go kopiować ręcznie.
 
 ## Checklist
 - [ ] CI jest zielone (`Build / dotnet build`) i lokalnie `dotnet build` przechodzi bez błędów
+- [ ] Nazwa gałęzi w formacie `<numer>-<nazwa-z-myslnikami>` (check `issue-branch` tylko ostrzega)
 - [ ] Sprawdzone ręcznie w Godocie (opisałem powyżej, co sprawdziłem)
 - [ ] Zgodne z CODE_STYLE.md
 - [ ] Nie dodałem plików z `.godot/`, `bin/`, `obj/`
@@ -153,12 +160,16 @@ GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL
 
 ## Automatyczny build (CI)
 
-Każdy push do `main` i każdy pull request uruchamia workflow [`.github/workflows/build.yml`](.github/workflows/build.yml) na GitHub Actions: pobranie repo → .NET 8 → `dotnet build`. Wynik zobaczysz pod PR-em (check `Build / dotnet build`), przy commicie oraz w zakładce **Actions**.
+Każdy push do `main` i każdy pull request uruchamia workflow [`.github/workflows/build.yml`](../.github/workflows/build.yml) na GitHub Actions: pobranie repo → .NET 8 → `dotnet build`. Wynik zobaczysz pod PR-em (check `Build / dotnet build`), przy commicie oraz w zakładce **Actions**.
 
 - **Czerwony build = PR nie jest gotowy do merge'a**, nawet jeśli ma już zatwierdzenia. Napraw błąd u siebie, zrób commit i push — CI uruchomi się ponownie (poprzedni przebieg dla tej samej gałęzi jest anulowany).
 - **Zielone CI nie zastępuje testu manualnego.** Workflow tylko kompiluje kod: nie uruchamia gry, nie ma jeszcze testów automatycznych ani sceny głównej.
 - Jak czytać błąd: **Actions** → wybierz przebieg → job `dotnet build` → krok `Build`. Komunikat kompilatora jest tam dosłownie taki sam, jak w Twoim terminalu.
 - Lokalnie sprawdzisz to samo komendą `dotnet build` (albo ostrzej, przed wysłaniem PR-a: `dotnet build -warnaserror`).
+
+Każdy pull request uruchamia też workflow [`branch-check.yml`](../.github/workflows/branch-check.yml) (check `issue-branch`). Jest to check **ostrzegawczy**: sprawdza, czy nazwa ma format `<numer>-<nazwa-z-myslnikami>` i czy wskazane issue istnieje, jest otwarte i ma typ Bug/Feature. Jeśli coś nie pasuje, w PR pojawi się żółte ostrzeżenie, ale merge nie zostanie zablokowany.
+
+Po każdym pushu do `main` uruchamia się dodatkowo workflow [`release.yml`](../.github/workflows/release.yml): podbija numer wersji (patch), eksportuje grę na Windows, Linux i macOS i publikuje wydanie na GitHubie z changelogiem z commitów. Jak to działa i jak zrobić wydanie minor/major — [RELEASING.md](RELEASING.md).
 
 ## Code review
 
@@ -224,7 +235,8 @@ Uzasadnienie jest proste: chcemy, żeby po semestrze każdy wyszedł z projektu 
 
 - Korzystamy z assetów o wolnych licencjach (np. CC0, CC-BY) albo robimy je sami.
 - W opisie PR-a przy dodaniu assetu podajemy **źródło, autora i licencję**.
-- Jeśli licencja wymaga atrybucji (np. CC-BY) — dopisujemy asset do `Assets/CREDITS.md` (utwórz ten plik, jeśli jeszcze nie istnieje).
+- **Każdy zewnętrzny asset** — nawet taki, którego licencja nie wymaga atrybucji — dopisujemy do rejestru [`Assets/CREDITS.md`](../Assets/CREDITS.md). Instrukcję i wzór wiersza znajdziesz w tym pliku.
+- Jeśli licencja wymaga dołączenia treści, zapisujemy ją w `Assets/Licenses/<NazwaAssetu>-LICENSE.txt` i linkujemy z rejestru.
 - Duże assety (grafika, audio, modele, fonty) przechodzą przez Git LFS automatycznie, zgodnie z `.gitattributes`. Jeśli dodajesz nowy typ pliku, dodaj go w tym samym PR-ze: `git lfs track "*.ext"`.
 - Nie wrzucamy assetów z niejasnym pochodzeniem ani „znalezionych w internecie”.
 
@@ -237,7 +249,7 @@ Zadanie jest skończone, gdy:
 - [ ] kod jest zgodny z [CODE_STYLE.md](CODE_STYLE.md),
 - [ ] PR ma wymagane zatwierdzenia (2, w tym opiekun), a komentarze z review są rozwiązane,
 - [ ] zmiana została przetestowana, a wynik opisany w PR-ze,
-- [ ] dokumentacja (README/SETUP/CODE_STYLE) jest zaktualizowana, jeśli zmiana tego wymaga,
+- [ ] dokumentacja (`README`, `docs/SETUP.md`, `docs/CODE_STYLE.md`) jest zaktualizowana, jeśli zmiana tego wymaga,
 - [ ] karta na tablicy jest w kolumnie *Done*, a gałąź usunięta.
 
 ## Zabezpieczenia repozytorium (dla administratorów)
@@ -250,16 +262,16 @@ Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć 
 | └ Required approvals | **2** |
 | └ Dismiss stale approvals when new commits are pushed | ✅ |
 | └ Require review from Code Owners | ✅ |
-| Require status checks to pass (`Build / dotnet build`) | ✅ |
+| Require status checks to pass (`dotnet build`) | ✅ |
 | Require branches to be up to date before merging | ✅ |
 | Require conversation resolution before merging | ✅ |
 | Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
 | Do not allow bypassing the above settings | ✅ |
 
-Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
+Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](../.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
 
-**Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Repozytorium jest publiczne, a GitHub udostępnia ochronę gałęzi dla publicznych repozytoriów bezpłatnie (dla prywatnych wymagałaby planu **GitHub Team**). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
+**Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Check `issue-branch` jest tylko informacyjny (nie jest wymagany). Repozytorium jest publiczne, a GitHub udostępnia te funkcje dla publicznych repozytoriów bezpłatnie (dla prywatnych część wymagałaby płatnego planu). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
 ---
 
-Pytania, których nie ma w tym dokumencie, są sygnałem, że dokument wymaga dopisania — zgłoś to jako issue z etykietą `docs`.
+Pytania, których nie ma w tym dokumencie, są sygnałem, że dokument wymaga dopisania — zgłoś to jako issue typu Feature z etykietą `documentation`.

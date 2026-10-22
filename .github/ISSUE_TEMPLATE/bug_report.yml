@@ -1,0 +1,40 @@
+name: Bug
+description: Zgłoś błąd — coś działa inaczej, niż powinno.
+labels: ["bug"]
+type: Bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Opisz błąd własnymi słowami — wystarczy krótki opis. Reszta pól jest opcjonalna.
+        Zgłoszenie trafi na tablicę projektu jako zadanie typu **Bug**.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Co się stało?
+      description: Opisz faktyczne zachowanie gry. To pole jest wymagane.
+      placeholder: "Np. po skoku na krawędź platformy postać przenika przez podłogę."
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Szczegóły (opcjonalnie)
+      description: Co powinno się stać, jak powtórzyć błąd, środowisko, logi — jeśli chcesz je dopisać.
+      placeholder: |
+        Co powinno się stać: ...
+        Kroki do powtórzenia: ...
+        Środowisko: Windows 11, Godot 4.7.2 .NET
+        Logi: ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Zrzuty ekranu / nagranie (opcjonalnie)
+      description: Przeciągnij pliki tutaj albo opisz, co widać.
+    validations:
+      required: false
