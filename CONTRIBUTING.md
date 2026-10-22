@@ -12,11 +12,13 @@ Repozytorium ma uczyć pracy w zespole, dlatego część zasad (review, issue, t
 - [Propozycje nowych rzeczy](#propozycje-nowych-rzeczy)
 - [Proces zmiany krok po kroku](#proces-zmiany-krok-po-kroku)
 - [Pull request — wymagania](#pull-request--wymagania)
+- [Automatyczny build (CI)](#automatyczny-build-ci)
 - [Code review](#code-review)
 - [Testowanie po code review](#testowanie-po-code-review)
 - [Zasady dotyczące AI](#zasady-dotyczące-ai)
 - [Assety i licencje](#assety-i-licencje)
 - [Definition of Done](#definition-of-done)
+- [Zabezpieczenia repozytorium (dla administratorów)](#zabezpieczenia-repozytorium-dla-administratorów)
 
 ---
 
@@ -111,6 +113,15 @@ Zasady:
 - Jeśli `main` poszedł naprzód, zaktualizuj swoją gałąź (`git pull --rebase origin main`) i rozwiąż konflikty u siebie, przed merge.
 - Nie zamykamy PR-a bez odpowiedzi na komentarze z review.
 
+### Commity
+
+- **Jeden commit = jedna logiczna zmiana.** Commitujemy małymi krokami, żeby z diffu dało się przeczytać, co się stało i dlaczego.
+- **Jasny komunikat w trybie rozkazującym** („Dodaj ruch gracza w osi X”, nie „dodałem”, „zmiany”, „fix”, „poprawki”, „update”).
+- **Pierwsza linia to sedno zmiany.** Jeśli potrzebujesz więcej miejsca, po pustej linii dopisz szczegóły (co i dlaczego).
+- Do commita trafia tylko to, co chcesz wysłać: `git add` konkretnych plików zamiast `git add .` w ciemno. Przed commitem zerknij na `git status` i `git diff --staged`.
+- **Nie commitujemy** plików z `.godot/`, `bin/`, `obj/`, wyeksportowanych buildów, sekretów i lokalnych ścieżek (.gitignore powinno to obejmować).
+- Na `main` trafia jeden commit na PR (**Squash and merge**), dlatego tytuł PR-a piszemy tak, jak ma wyglądać komunikat tego commita.
+
 ## Pull request — wymagania
 
 Każdy PR musi mieć:
@@ -118,39 +129,36 @@ Każdy PR musi mieć:
 - **Minimum 2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt** (bardziej doświadczonej). Autor nie zatwierdza własnego PR-a i nie merge'uje go bez wymaganych zatwierdzeń — nawet przy zmianie „jednej linijki”.
 - **Powiązanie z issue** — w opisie `Closes #123` albo `Refs #123`, żeby zadanie zamknęło się po merge'u.
 - **Opis** wypełniony według poniższego szablonu.
-- **Zielony build** — `dotnet build` bez błędów i bez nowych ostrzeżeń.
+- **Zielony build** — `dotnet build` bez błędów i bez nowych ostrzeżeń, potwierdzony przez CI (patrz [Automatyczny build (CI)](#automatyczny-build-ci)).
 - **Brak plików, których nie powinno być**: `.godot/`, `bin/`, `obj/`, wyeksportowane buildy, lokalne ścieżki, sekrety.
 
-### Szablon opisu PR (do skopiowania)
+### Szablon opisu PR
 
-```markdown
-## Co
-<!-- Co się zmieniło, w jednym akapicie. -->
-
-## Dlaczego
-<!-- Po co to robimy. Powiązane issue: Closes #123 -->
-
-## Jak testować
-1. ...
-2. ...
-
-## Zrzuty / nagrania
-<!-- Dla zmian widocznych w UI. -->
+GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md)) — nie musisz go kopiować ręcznie.
 
 ## Checklist
-- [ ] Build przechodzi (`dotnet build`)
-- [ ] Sprawdzone ręcznie w Godocie (opisałem, co sprawdziłem)
+- [ ] CI jest zielone (`Build / dotnet build`) i lokalnie `dotnet build` przechodzi bez błędów
+- [ ] Sprawdzone ręcznie w Godocie (opisałem powyżej, co sprawdziłem)
 - [ ] Zgodne z CODE_STYLE.md
 - [ ] Nie dodałem plików z `.godot/`, `bin/`, `obj/`
-- [ ] Jeśli użyłem AI do kodu — oznaczyłem to w kodzie i w tym opisie
+- [ ] Jeśli użyłem AI do kodu — oznaczyłem to w kodzie (`AI-GENERATED`) i w tym opisie
 - [ ] Zaktualizowałem dokumentację, jeśli zmiana tego wymaga
-```
+- [ ] PR ma **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej**
 
 ### Merge
 
 - Merge'ujemy **Squash and merge**, żeby historia `main` była czytelna: jedna zmiana = jeden commit.
 - Tytuł PR-a staje się treścią commita, dlatego ma być konkretny („Dodaj pauzę w menu”, nie „poprawki”).
 - Po merge'u: usuń gałąź, przenieś kartę na *Done*.
+
+## Automatyczny build (CI)
+
+Każdy push do `main` i każdy pull request uruchamia workflow [`.github/workflows/build.yml`](.github/workflows/build.yml) na GitHub Actions: pobranie repo → .NET 8 → `dotnet build`. Wynik zobaczysz pod PR-em (check `Build / dotnet build`), przy commicie oraz w zakładce **Actions**.
+
+- **Czerwony build = PR nie jest gotowy do merge'a**, nawet jeśli ma już zatwierdzenia. Napraw błąd u siebie, zrób commit i push — CI uruchomi się ponownie (poprzedni przebieg dla tej samej gałęzi jest anulowany).
+- **Zielone CI nie zastępuje testu manualnego.** Workflow tylko kompiluje kod: nie uruchamia gry, nie ma jeszcze testów automatycznych ani sceny głównej.
+- Jak czytać błąd: **Actions** → wybierz przebieg → job `dotnet build` → krok `Build`. Komunikat kompilatora jest tam dosłownie taki sam, jak w Twoim terminalu.
+- Lokalnie sprawdzisz to samo komendą `dotnet build` (albo ostrzej, przed wysłaniem PR-a: `dotnet build -warnaserror`).
 
 ## Code review
 
@@ -231,6 +239,26 @@ Zadanie jest skończone, gdy:
 - [ ] zmiana została przetestowana, a wynik opisany w PR-ze,
 - [ ] dokumentacja (README/SETUP/CODE_STYLE) jest zaktualizowana, jeśli zmiana tego wymaga,
 - [ ] karta na tablicy jest w kolumnie *Done*, a gałąź usunięta.
+
+## Zabezpieczenia repozytorium (dla administratorów)
+
+Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć od dobrej woli. Docelowe ustawienie gałęzi `main`:
+
+| Ustawienie | Wartość |
+|---|---|
+| Require a pull request before merging | ✅ |
+| └ Required approvals | **2** |
+| └ Dismiss stale approvals when new commits are pushed | ✅ |
+| └ Require review from Code Owners | ✅ |
+| Require status checks to pass (`Build / dotnet build`) | ✅ |
+| Require branches to be up to date before merging | ✅ |
+| Require conversation resolution before merging | ✅ |
+| Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
+| Do not allow bypassing the above settings | ✅ |
+
+Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
+
+**Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Repozytorium jest publiczne, a GitHub udostępnia ochronę gałęzi dla publicznych repozytoriów bezpłatnie (dla prywatnych wymagałaby planu **GitHub Team**). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
 ---
 

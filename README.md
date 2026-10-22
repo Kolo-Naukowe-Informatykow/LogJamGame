@@ -28,6 +28,7 @@ Otwarty, zespołowy projekt gry tworzony w ramach działalności **Koła Naukowe
 | **Zadania** | Tablica w [GitHub Projects](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects). Wybierasz zadanie, przypisujesz się, przenosisz kartę na *In progress*. |
 | **Zmiany** | Zawsze przez Pull Request do `main`. Nikt nie pushuje bezpośrednio do `main`. |
 | **Review** | Minimum **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt**. |
+| **CI** | Każdy pull request i push do `main` buduje się automatycznie (GitHub Actions). Czerwony build blokuje merge. |
 | **Testy** | Po zatwierdzeniu zmiany ktoś realnie uruchamia grę/scenę i sprawdza działanie. Nie każdy task, ale regularnie. |
 | **Błędy** | Zgłaszamy jako **issue** na GitHubie (z krokami do powtórzenia). Nie naprawiamy błędów „po cichu”. |
 | **AI** | **Kod napisany przez AI oznaczamy komentarzem.** Zabronione jest generowanie assetów (grafiki, dźwięku, modeli, fontów). Projekt ma uczyć — AI nie może zrobić zadania za nas. |
