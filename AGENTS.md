@@ -2,9 +2,6 @@
 
 This repository is a **collaborative learning project**: a game built in **Godot 4.7.2 (.NET) with C#** (`net8.0`) by members of a university computer science club. Most contributors are beginners who are learning the engine, the language, and Git/GitHub workflow.
 
-> **Nadpisania lokalne:** jeśli w Twoim środowisku istnieje lokalny plik `.github/copilot-instructions.md`
-> (np. niecommitowane instrukcje administratora), jego postanowienia mają pierwszeństwo przed tym
-> dokumentem. Nie zakładaj, że taki plik istnieje u innych osób.
 
 Authoritative documents (read them before making changes):
 
@@ -13,9 +10,6 @@ Authoritative documents (read them before making changes):
 - [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) — task board, PR rules, review, testing, AI policy
 - [docs/CODE_STYLE.md](docs/CODE_STYLE.md) — naming, formatting, Godot conventions, AI marker syntax
 
-## Communicate in Polish
-
-Always answer the user in **Polish**, regardless of the language of the code or of this file.
 
 ## Prime directive: this is a learning project
 
