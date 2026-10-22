@@ -268,12 +268,13 @@ Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć 
 | └ Require review from Code Owners | ✅ |
 | Require status checks to pass (`Build / dotnet build`) | ✅ |
 | Require branches to be up to date before merging | ✅ |
+| Require conversation resolution before merging | ✅ |
 | Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
 | Do not allow bypassing the above settings | ✅ |
 
 Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
 
-**Stan obecny:** repozytorium jest prywatne, a organizacja korzysta z planu **GitHub Free**. Ochrona gałęzi i rulesety dla prywatnych repozytoriów są dostępne dopiero od planu **GitHub Team** (albo bezpłatnie, jeśli repozytorium będzie publiczne). Do tego czasu zasady działają przez ten dokument, code review i CODEOWNERS, ale GitHub nie blokuje technicznie pushu do `main` ani merge'a bez zatwierdzeń. Po zmianie planu administrator włącza powyższą listę w *Settings → Rules → Rulesets* (nowszy interfejs) albo *Settings → Branches → Add branch protection rule* (klasyczna ochrona).
+**Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Repozytorium jest publiczne, a GitHub udostępnia ochronę gałęzi dla publicznych repozytoriów bezpłatnie (dla prywatnych wymagałaby planu **GitHub Team**). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
 ---
 
