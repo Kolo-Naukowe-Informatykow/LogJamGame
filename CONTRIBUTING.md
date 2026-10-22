@@ -270,11 +270,9 @@ Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć 
 | Require branches to be up to date before merging | ✅ |
 | Require conversation resolution before merging | ✅ |
 | Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
-| Do not allow bypassing the above settings | ❌ — administrator repozytorium może obejść wymagania (tylko awaryjnie) |
+| Do not allow bypassing the above settings | ✅ |
 
 Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
-
-**Wyjątek administracyjny:** GitHub nie pozwala zatwierdzić **własnego** PR-a — dotyczy to każdego konta i każdego planu, nie da się tego obejść uprawnieniami. Administrator repozytorium może natomiast zmergować PR, pomijając wymagane zatwierdzenia i checki (przycisk *Merge without waiting for requirements to be met*). To wyjątek na sytuacje awaryjne (np. zepsuty CI blokujący pilną poprawkę), a nie codzienna droga — dla pozostałych osób zasady nadal obowiązują.
 
 **Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Repozytorium jest publiczne, a GitHub udostępnia ochronę gałęzi dla publicznych repozytoriów bezpłatnie (dla prywatnych wymagałaby planu **GitHub Team**). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
