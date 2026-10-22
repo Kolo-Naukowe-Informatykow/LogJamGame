@@ -29,7 +29,7 @@ Otwarty, zespołowy projekt gry tworzony w ramach działalności **Koła Naukowe
 | **Zmiany** | Zawsze przez Pull Request do `main`. Nikt nie pushuje bezpośrednio do `main`. |
 | **Gałęzie** | Tworzymy z issue; domyślna nazwa GitHuba to `<numer>-<nazwa-z-myslnikami>` (np. `6-temporary-test-scene`). Check `issue-branch` tylko ostrzega. |
 | **Statusy** | Ustawiamy ręcznie: gałąź/start → *In progress*, PR → *In review*, merge → *Test*, po testach zamknięcie → *Done*. |
-| **Review** | Minimum **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt**. |
+| **Review** | Minimum **2 zatwierdzenia**, w tym **jedno od code ownera** (zespół `@Kolo-Naukowe-Informatykow/maintainers`).|
 | **CI** | Każdy pull request i push do `main` buduje się automatycznie (GitHub Actions). Czerwony build blokuje merge. |
 | **Wydania** | Każdy push do `main` publikuje nowe wydanie z buildami na Windows/Linux/macOS i changelogiem z commitów. Szczegóły: [docs/RELEASING.md](docs/RELEASING.md). |
 | **Testy** | Po zatwierdzeniu zmiany ktoś realnie uruchamia grę/scenę i sprawdza działanie. Nie każdy task, ale regularnie. |

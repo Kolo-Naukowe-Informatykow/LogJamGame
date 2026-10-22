@@ -144,7 +144,7 @@ Zasady:
 
 Każdy PR musi mieć:
 
-- **Minimum 2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt** (bardziej doświadczonej). Autor nie zatwierdza własnego PR-a i nie merge'uje go bez wymaganych zatwierdzeń — nawet przy zmianie „jednej linijki”.
+- **Minimum 2 zatwierdzenia** (wymóg GitHuba), w tym **co najmniej jedno od code ownera** — członka zespołu [`@Kolo-Naukowe-Informatykow/maintainers`](../.github/CODEOWNERS). GitHub automatycznie przypisuje jednego członka zespołu do review i powiadamia tylko tę osobę (auto assignment + „Only notify requested team members”). Nie musisz prosić ręcznie, ale możesz dodatkowo poprosić konkretną osobę przez **Reviewers**. Autor nie zatwierdza własnego PR-a i nie merge'uje go bez wymaganych zatwierdzeń — nawet przy zmianie „jednej linijki”.
 - **Powiązanie z issue** — w opisie `Closes #123` albo `Refs #123`, żeby zadanie zamknęło się po merge'u.
 - **Nazwa gałęzi** — zalecany format `<numer>-<nazwa-z-myslnikami>` (domyślna nazwa GitHuba). Check `issue-branch` tylko ostrzega, jeśli nie da się powiązać gałęzi z issue.
 - **Opis** wypełniony według poniższego szablonu.
@@ -163,7 +163,7 @@ GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL
 - [ ] Nie dodałem plików z `.godot/`, `bin/`, `obj/`
 - [ ] Jeśli użyłem AI do kodu — oznaczyłem to w kodzie (`AI-GENERATED`) i w tym opisie
 - [ ] Zaktualizowałem dokumentację, jeśli zmiana tego wymaga
-- [ ] PR ma **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej**
+- [ ] PR ma **2 zatwierdzenia**, w tym **co najmniej jedno od code ownera** (członka zespołu `maintainers`)
 
 ### Merge
 
@@ -260,7 +260,7 @@ Zadanie jest skończone, gdy:
 - [ ] działa zgodnie z opisem zadania, na cudzym komputerze też,
 - [ ] `dotnet build` przechodzi bez błędów i bez nowych ostrzeżeń,
 - [ ] kod jest zgodny z [CODE_STYLE.md](CODE_STYLE.md),
-- [ ] PR ma wymagane zatwierdzenia (2, w tym opiekun), a komentarze z review są rozwiązane,
+- [ ] PR ma 2 zatwierdzenia, w tym jedno od code ownera (zespół `maintainers`); komentarze z review są rozwiązane,
 - [ ] zmiana została przetestowana, a wynik opisany w PR-ze,
 - [ ] dokumentacja (`README`, `docs/SETUP.md`, `docs/CODE_STYLE.md`) jest zaktualizowana, jeśli zmiana tego wymaga,
 - [ ] karta na tablicy jest w kolumnie *Done*, a gałąź usunięta.
@@ -274,14 +274,14 @@ Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć 
 | Require a pull request before merging | ✅ |
 | └ Required approvals | **2** |
 | └ Dismiss stale approvals when new commits are pushed | ✅ |
-| └ Require review from Code Owners | ✅ |
+| └ Require review from Code Owners | ✅ (zespół `@Kolo-Naukowe-Informatykow/maintainers`) |
 | Require status checks to pass (`dotnet build`) | ✅ |
 | Require branches to be up to date before merging | ✅ |
 | Require conversation resolution before merging | ✅ |
 | Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
 | Do not allow bypassing the above settings | ✅ |
 
-Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](../.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
+**Osoby nadzorujące (code owners):** zespół [`@Kolo-Naukowe-Informatykow/maintainers`](https://github.com/orgs/Kolo-Naukowe-Informatykow/teams/maintainers) — @6ajmon, @Sobgo, @krasnykid. Repozytorium ma włączone **Require review from Code Owners**, więc jedno z dwóch zatwierdzeń musi pochodzić od członka tego zespołu. GitHub automatycznie przypisuje jednego członka zespołu do PR (round robin) i — dzięki ustawieniu **Only notify requested team members** — powiadamia tylko tę osobę, a nie cały zespół. Nadal możesz poprosić o review konkretną osobę przez **Reviewers**.
 
 **Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Check `issue-branch` jest tylko informacyjny (nie jest wymagany). Repozytorium jest publiczne, a GitHub udostępnia te funkcje dla publicznych repozytoriów bezpłatnie (dla prywatnych część wymagałaby płatnego planu). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
