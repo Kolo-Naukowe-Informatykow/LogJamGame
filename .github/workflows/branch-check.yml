@@ -20,42 +20,38 @@ jobs:
           BRANCH: ${{ github.head_ref }}
           REPO: ${{ github.repository }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
 
-          pattern='^(bug|feature)/([0-9]+)_[a-z0-9][a-z0-9._-]*$'
+          pattern='^([0-9]+)-[^/]+$'
+
+          if [ -z "${BRANCH:-}" ]; then
+            echo "::warning::Nie udało się odczytać nazwy gałęzi (github.head_ref jest puste)."
+            exit 0
+          fi
 
           if [[ ! "$BRANCH" =~ $pattern ]]; then
-            echo "::error::Niepoprawna nazwa gałęzi: '$BRANCH'."
-            echo "::error::Wymagany format: bug/<numer>_<nazwa> albo feature/<numer>_<nazwa> (małe litery, cyfry, kropka, myślnik, podkreślenie)."
-            exit 1
+            echo "::warning::Nazwa gałęzi '$BRANCH' nie przypomina domyślnej nazwy GitHuba. Zalecany format: <numer>-<nazwa-z-myslnikami>, np. 6-temporary-test-scene."
+            exit 0
           fi
 
-          kind="${BASH_REMATCH[1]}"
-          number="${BASH_REMATCH[2]}"
+          number="${BASH_REMATCH[1]}"
 
-          issue="$(gh api "repos/$REPO/issues/$number" 2>/dev/null || true)"
-
-          if [ -z "$issue" ]; then
-            echo "::error::Issue #$number nie istnieje w $REPO. Gałąź musi powstać z issue."
-            exit 1
+          if ! issue="$(gh api "repos/$REPO/issues/$number" 2>/dev/null)"; then
+            echo "::warning::Nie udało się pobrać issue #$number. Upewnij się, że gałąź powstała z issue w $REPO."
+            exit 0
           fi
 
-          state="$(jq -r '.state' <<< "$issue")"
+          state="$(jq -r '.state // empty' <<< "$issue")"
           type="$(jq -r '.type.name // empty' <<< "$issue")"
 
           if [ "$state" != "open" ]; then
-            echo "::error::Issue #$number nie jest otwarte (state: $state)."
-            exit 1
+            echo "::warning::Issue #$number nie jest otwarte (state: ${state:-brak})."
+            exit 0
           fi
 
-          expected="Feature"
-          if [ "$kind" = "bug" ]; then
-            expected="Bug"
-          fi
-
-          if [ "$type" != "$expected" ]; then
-            echo "::error::Issue #$number ma typ '$type', a gałąź zaczyna się od '$kind/'. Oczekiwano typu '$expected'."
-            exit 1
+          if [ "$type" != "Bug" ] && [ "$type" != "Feature" ]; then
+            echo "::warning::Issue #$number ma typ '${type:-brak}'. Oczekiwano typu Bug albo Feature."
+            exit 0
           fi
 
           echo "OK: $BRANCH → issue #$number ($type)"

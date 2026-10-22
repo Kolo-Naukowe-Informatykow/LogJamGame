@@ -1,53 +1,27 @@
 name: Feature
 description: Zaproponuj nową funkcję albo usprawnienie.
-title: "[Feature]: "
 labels: ["enhancement"]
 type: Feature
 body:
   - type: markdown
     attributes:
       value: |
-        Dziękujemy za pomysł! Opisz problem i proponowane rozwiązanie.
+        Opisz pomysł własnymi słowami — bez sztywnego szablonu.
         Zgłoszenie trafi na tablicę projektu jako zadanie typu **Feature**.
 
   - type: textarea
-    id: problem
+    id: idea
     attributes:
-      label: Jaki problem to rozwiązuje?
-      description: Opisz, czego brakuje i dlaczego to ważne.
+      label: Opisz swój pomysł
+      description: Co chcesz dodać lub zmienić i po co? To pole jest wymagane.
+      placeholder: "Np. chciałbym ekran pauzy z możliwością powrotu do menu..."
     validations:
       required: true
 
   - type: textarea
-    id: solution
+    id: context
     attributes:
-      label: Proponowane rozwiązanie
-      description: Jak według Ciebie powinno to działać?
-    validations:
-      required: true
-
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: Alternatywy
-      description: Inne pomysły lub obejścia, które rozważałeś.
+      label: Dodatkowy kontekst (opcjonalnie)
+      description: Linki, zrzuty, alternatywy, przykłady — jeśli chcesz coś dodać.
     validations:
       required: false
-
-  - type: textarea
-    id: scope
-    attributes:
-      label: Zakres i kryteria akceptacji
-      description: Co dokładnie ma być gotowe? Jak sprawdzimy, że działa?
-    validations:
-      required: false
-
-  - type: checkboxes
-    id: checks
-    attributes:
-      label: Zanim wyślesz
-      options:
-        - label: Sprawdziłem, czy taki pomysł nie został już zgłoszony.
-          required: true
-        - label: Rozumiem, że zgłoszenie zostanie dodane do tablicy projektu i wymaga akceptacji opiekunów.
-          required: true

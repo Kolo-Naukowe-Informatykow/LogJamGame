@@ -27,7 +27,7 @@ Otwarty, zespołowy projekt gry tworzony w ramach działalności **Koła Naukowe
 |---|---|
 | **Zadania** | Tablica w [GitHub Projects #6](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects/6). Każde zadanie to issue typu **Bug** albo **Feature**. Wybierasz zadanie, przypisujesz się, przenosisz kartę na *In progress*. |
 | **Zmiany** | Zawsze przez Pull Request do `main`. Nikt nie pushuje bezpośrednio do `main`. |
-| **Gałęzie** | Tylko `bug/<numer>_<nazwa>` i `feature/<numer>_<nazwa>`, tworzone z issue. Inne nazwy blokuje ruleset, a check `issue-branch` pilnuje numeru i typu issue. |
+| **Gałęzie** | Tworzymy z issue; domyślna nazwa GitHuba to `<numer>-<nazwa-z-myslnikami>` (np. `6-temporary-test-scene`). Check `issue-branch` tylko ostrzega. |
 | **Review** | Minimum **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt**. |
 | **CI** | Każdy pull request i push do `main` buduje się automatycznie (GitHub Actions). Czerwony build blokuje merge. |
 | **Wydania** | Każdy push do `main` publikuje nowe wydanie z buildami na Windows/Linux/macOS i changelogiem z commitów. Szczegóły: [docs/RELEASING.md](docs/RELEASING.md). |

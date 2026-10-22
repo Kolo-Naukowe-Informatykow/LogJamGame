@@ -53,7 +53,7 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 - **Never generate or add assets**: images, sprites, icons, textures, audio, music, 3D models, fonts, animations. Do not generate them with AI tools, do not download stock assets, and do not modify existing asset files. If asked, refuse and explain the project policy (assets must come from free-licensed sources with a documented license, or be made by contributors).
 - Never commit secrets, tokens, or local machine paths.
 - Never push directly to `main`, never force-push a shared branch, never merge a pull request (2 approvals are required, at least one from a maintainer).
-- Create branches only as `bug/<issue-number>_<slug>` or `feature/<issue-number>_<slug>`, from an existing issue of the matching type (`Bug` or `Feature`). Other branch names are blocked by a repository ruleset, and the `issue-branch` check verifies the issue.
+- Create branches from issues and keep GitHub's default name `<issue-number>-<slug>` (e.g. `6-temporary-test-scene`). The `issue-branch` check is advisory: it warns about naming or issue problems but does not block merges.
 - Do not change project scaffolding — `LogJamGame.csproj`, `LogJamGame.sln`, `project.godot`, the assembly/namespace name, or the folder layout — unless explicitly asked.
 - Do not hand-edit `.tscn`, `.tres` or `project.godot` files. Describe the exact editor steps instead (node path, property, value), so a human performs it in the Godot editor.
 - Do not add NuGet packages or new tooling without asking first.

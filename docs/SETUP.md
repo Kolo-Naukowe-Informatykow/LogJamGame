@@ -152,7 +152,7 @@ godot --path .               # uruchomienie gry, jeśli masz godot w PATH
 
 Minimalna wersja procesu przed oddaniem PR-a:
 
-1. `git switch -c bug/12_poprawa-kolizji` albo `feature/3_export-presetow` (numer issue i prefiks zależny od typu — patrz [CONTRIBUTING.md](CONTRIBUTING.md#proces-zmiany-krok-po-kroku))
+1. `git switch -c 6-temporary-test-scene` (domyślna nazwa GitHuba: numer issue + tytuł z myślnikami — patrz [CONTRIBUTING.md](CONTRIBUTING.md#proces-zmiany-krok-po-kroku))
 2. praca → `dotnet build` (musi przejść bez błędów),
 3. uruchom scenę w Godocie i sprawdź, że nic się nie zepsuło,
 4. commit + push + pull request ([CONTRIBUTING.md](CONTRIBUTING.md)).

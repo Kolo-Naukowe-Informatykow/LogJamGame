@@ -35,7 +35,7 @@ Repozytorium ma uczyć pracy w zespole, dlatego część zasad (review, issue, t
 
 Zadania żyją na **[tablicy GitHub Projects](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects/6)** projektu. Każde zadanie to issue typu **Bug** albo **Feature** — nie ma osobnego typu „Task”. Typ Task jest wyłączany w ustawieniach organizacji; jeśli nadal widzisz go w formularzu, poproś właściciela organizacji o jego wyłączenie.
 
-Nowe issue tworzymy wyłącznie przez szablony w [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/). Szablon ustawia właściwy typ (Bug/Feature) i podpowiada, jakie informacje są potrzebne. Puste issue jest wyłączone. Projekt ma włączony **auto-add**, więc nowe issue z repozytorium trafiają na tablicę automatycznie.
+Nowe issue tworzymy wyłącznie przez szablony w [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/). Szablon ustawia właściwy typ (Bug/Feature) i podpowiada, co warto dopisać — wymagany jest tylko krótki opis. Puste issue jest wyłączone. Projekt ma włączony **auto-add**, więc nowe issue z repozytorium trafiają na tablicę automatycznie.
 
 Główny widok tablicy to **Kanban**. Są też widoki: *Priority board*, *Team items*, *Roadmap* i *My items* (filtr `assignee:@me`).
 
@@ -63,13 +63,13 @@ Znalazłeś błąd? **Załóż issue z szablonu Bug.** Nie naprawiamy błędów 
 
 Zanim założysz issue, sprawdź, czy ktoś już go nie zgłosił (przeszukaj issues po słowach kluczowych).
 
-W issue podaj:
+Wystarczy krótki opis błędu. Jeśli możesz, dopisz też:
 
-- **Co się stało** i co powinno się stać.
-- **Kroki do powtórzenia** — numerowana lista, najlepiej od uruchomienia gry.
-- **Jak często** — zawsze, za każdym razem po X, tylko czasem.
-- **Środowisko** — system, wersja Godota (4.7.2), numer commita lub gałęzi.
-- **Materiały** — zrzut ekranu, log z okna *Output*, treść błędu z konsoli.
+- co powinno się stać,
+- kroki do powtórzenia (numerowana lista, najlepiej od uruchomienia gry),
+- jak często występuje,
+- środowisko (system, wersja Godota 4.7.2, numer commita lub gałęzi),
+- materiały (zrzut ekranu, log z okna *Output*, treść błędu z konsoli).
 
 Etykiety: `bug`, `enhancement`, `documentation`, `good first issue`, `help wanted`, `question`. Typ issue (Bug/Feature) to osobne pole — nie myl go z etykietą.
 
@@ -77,7 +77,7 @@ Jeśli chcesz sam naprawić zgłoszony błąd — napisz to w komentarzu pod iss
 
 ## Propozycje nowych rzeczy
 
-Pomysł na funkcję, ulepszenie albo usprawnienie repo? Załóż **issue z szablonu Feature** i poczekaj na akceptację (komentarz od osoby nadzorującej projekt lub decyzja na spotkaniu).
+Pomysł na funkcję, ulepszenie albo usprawnienie repo? Załóż **issue z szablonu Feature** i poczekaj na akceptację (komentarz od osoby nadzorującej projekt lub decyzja na spotkaniu). Wystarczy krótki opis pomysłu — reszta pól jest opcjonalna.
 
 To nie jest biurokracja dla samej siebie: dzięki temu nie powstają duże PR-y, których nie da się przyjąć, bo nie pasują do konceptu gry lub dublują czyjąś pracę.
 
@@ -89,8 +89,8 @@ git switch main
 git pull
 
 # 2. Utwórz gałąź z issue na tablicy (przycisk „Create a branch”)
-#    Nazwa musi zawierać numer issue i jego typ:
-git switch -c bug/12_poprawa-kolizji
+#    GitHub zaproponuje nazwę <numer>-<tytuł-z-myslnikami>; możesz ją zostawić:
+git switch -c 6-temporary-test-scene
 
 # 3. Pracuj i commituj małymi krokami
 git add .
@@ -100,21 +100,19 @@ git commit -m "Dodaj ruch gracza w osi X"
 dotnet build
 
 # 5. Wypchnij gałąź i otwórz pull request
-git push -u origin bug/12_poprawa-kolizji
+git push -u origin 6-temporary-test-scene
 ```
 
-Nazwy gałęzi:
+Nazwa gałęzi:
 
-| Prefiks | Do czego | Przykład |
+| Format | Skąd | Przykład |
 |---|---|---|
-| `bug/<numer>_<nazwa>` | naprawa błędu (issue typu Bug) | `bug/12_poprawa-kolizji` |
-| `feature/<numer>_<nazwa>` | nowa funkcja (issue typu Feature) | `feature/3_export-presetow` |
+| `<numer>-<nazwa-z-myslnikami>` | numer issue + tytuł issue, spacje zamienione na myślniki | `6-temporary-test-scene` |
 
 Zasady:
 
-- **Tylko te dwa prefiksy.** Gałąź musi zaczynać się od `bug/` albo `feature/`.
-- **Numer issue jest obowiązkowy** i musi wskazywać na istniejące, otwarte issue o właściwym typie (`bug/` → Bug, `feature/` → Feature). Reszta nazwy to krótki opis: małe litery, cyfry, `.`, `-`, `_`; bez spacji.
-- **Gałąź tworzymy z issue** — najlepiej przyciskiem **Create a branch** na karcie zadania. GitHub nie sprawdzi, czy gałąź naprawdę powstała z przycisku, dlatego nazwa jest weryfikowana przez ruleset i check `issue-branch`; PR z gałęzią bez istniejącego issue nie zostanie zmergowany.
+- **Zalecana jest domyślna nazwa GitHuba** — dokładnie taka, jaką proponuje przycisk **Create a branch** na karcie issue: `<numer>-<tytuł-z-myslnikami>`. Nie musisz jej zmieniać.
+- **Gałąź najlepiej tworzyć z issue** — wtedy numer jest w nazwie, a GitHub linkuje gałąź do issue. Check `issue-branch` sprawdza, czy numer wskazuje na istniejące, otwarte issue typu Bug albo Feature. Jeśli nie, wyświetla **ostrzeżenie**, ale nie blokuje merge'a.
 - **Nigdy nie pushujemy bezpośrednio do `main`.** Zawsze gałąź + pull request.
 - Jeden PR = jedna rzecz. Drobne poprawki z review dopisujemy do tego samego PR-a, ale nie dokładamy do niego przypadkowych innych zadań.
 - Jeśli `main` poszedł naprzód, zaktualizuj swoją gałąź (`git pull --rebase origin main`) i rozwiąż konflikty u siebie, przed merge.
@@ -135,7 +133,7 @@ Każdy PR musi mieć:
 
 - **Minimum 2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt** (bardziej doświadczonej). Autor nie zatwierdza własnego PR-a i nie merge'uje go bez wymaganych zatwierdzeń — nawet przy zmianie „jednej linijki”.
 - **Powiązanie z issue** — w opisie `Closes #123` albo `Refs #123`, żeby zadanie zamknęło się po merge'u.
-- **Poprawna nazwa gałęzi** — `bug/<numer>_<nazwa>` albo `feature/<numer>_<nazwa>`, z numerem istniejącego issue właściwego typu. Pilnuje tego ruleset i check `issue-branch`.
+- **Nazwa gałęzi** — zalecany format `<numer>-<nazwa-z-myslnikami>` (domyślna nazwa GitHuba). Check `issue-branch` tylko ostrzega, jeśli nie da się powiązać gałęzi z issue.
 - **Opis** wypełniony według poniższego szablonu.
 - **Zielony build** — `dotnet build` bez błędów i bez nowych ostrzeżeń, potwierdzony przez CI (patrz [Automatyczny build (CI)](#automatyczny-build-ci)).
 - **Brak plików, których nie powinno być**: `.godot/`, `bin/`, `obj/`, wyeksportowane buildy, lokalne ścieżki, sekrety.
@@ -145,7 +143,8 @@ Każdy PR musi mieć:
 GitHub wstawia ten szablon automatycznie do każdego nowego PR-a ([`.github/PULL_REQUEST_TEMPLATE.md`](../.github/PULL_REQUEST_TEMPLATE.md)) — nie musisz go kopiować ręcznie.
 
 ## Checklist
-- [ ] CI jest zielone (`Build / dotnet build` oraz `issue-branch`) i lokalnie `dotnet build` przechodzi bez błędów
+- [ ] CI jest zielone (`Build / dotnet build`) i lokalnie `dotnet build` przechodzi bez błędów
+- [ ] Nazwa gałęzi w formacie `<numer>-<nazwa-z-myslnikami>` (check `issue-branch` tylko ostrzega)
 - [ ] Sprawdzone ręcznie w Godocie (opisałem powyżej, co sprawdziłem)
 - [ ] Zgodne z CODE_STYLE.md
 - [ ] Nie dodałem plików z `.godot/`, `bin/`, `obj/`
@@ -168,7 +167,7 @@ Każdy push do `main` i każdy pull request uruchamia workflow [`.github/workflo
 - Jak czytać błąd: **Actions** → wybierz przebieg → job `dotnet build` → krok `Build`. Komunikat kompilatora jest tam dosłownie taki sam, jak w Twoim terminalu.
 - Lokalnie sprawdzisz to samo komendą `dotnet build` (albo ostrzej, przed wysłaniem PR-a: `dotnet build -warnaserror`).
 
-Każdy pull request uruchamia też workflow [`branch-check.yml`](../.github/workflows/branch-check.yml) (check `issue-branch`). Sprawdza on, czy nazwa gałęzi ma format `bug/<numer>_<nazwa>` albo `feature/<numer>_<nazwa>` oraz czy wskazane issue istnieje, jest otwarte i ma właściwy typ. Bez tego checku PR nie przejdzie.
+Każdy pull request uruchamia też workflow [`branch-check.yml`](../.github/workflows/branch-check.yml) (check `issue-branch`). Jest to check **ostrzegawczy**: sprawdza, czy nazwa ma format `<numer>-<nazwa-z-myslnikami>` i czy wskazane issue istnieje, jest otwarte i ma typ Bug/Feature. Jeśli coś nie pasuje, w PR pojawi się żółte ostrzeżenie, ale merge nie zostanie zablokowany.
 
 Po każdym pushu do `main` uruchamia się dodatkowo workflow [`release.yml`](../.github/workflows/release.yml): podbija numer wersji (patch), eksportuje grę na Windows, Linux i macOS i publikuje wydanie na GitHubie z changelogiem z commitów. Jak to działa i jak zrobić wydanie minor/major — [RELEASING.md](RELEASING.md).
 
@@ -263,16 +262,15 @@ Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć 
 | └ Required approvals | **2** |
 | └ Dismiss stale approvals when new commits are pushed | ✅ |
 | └ Require review from Code Owners | ✅ |
-| Require status checks to pass (`dotnet build`, `issue-branch`) | ✅ |
+| Require status checks to pass (`dotnet build`) | ✅ |
 | Require branches to be up to date before merging | ✅ |
 | Require conversation resolution before merging | ✅ |
 | Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
-| Ruleset „Nazewnictwo gałęzi” — tworzenie tylko `bug/*` i `feature/*` | ✅ |
 | Do not allow bypassing the above settings | ✅ |
 
 Kto jest „osobą nadzorującą”: właściciele kodu wpisani w [`.github/CODEOWNERS`](../.github/CODEOWNERS) — GitHub automatycznie prosi ich o review w każdym nowym PR-ze. Wymóg „Require review from Code Owners” sprawia, że co najmniej jedno z dwóch zatwierdzeń musi pochodzić od nich.
 
-**Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*, a nazewnictwo gałęzi pilnuje ruleset w *Settings → Rules → Rulesets*. Repozytorium jest publiczne, a GitHub udostępnia te funkcje dla publicznych repozytoriów bezpłatnie (dla prywatnych część wymagałaby płatnego planu). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
+**Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Check `issue-branch` jest tylko informacyjny (nie jest wymagany). Repozytorium jest publiczne, a GitHub udostępnia te funkcje dla publicznych repozytoriów bezpłatnie (dla prywatnych część wymagałaby płatnego planu). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
 ---
 

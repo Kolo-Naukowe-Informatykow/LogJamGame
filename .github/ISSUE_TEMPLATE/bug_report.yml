@@ -1,85 +1,40 @@
 name: Bug
 description: Zgłoś błąd — coś działa inaczej, niż powinno.
-title: "[Bug]: "
 labels: ["bug"]
 type: Bug
 body:
   - type: markdown
     attributes:
       value: |
-        Dziękujemy za zgłoszenie! Im więcej szczegółów, tym łatwiej komuś odtworzyć problem.
+        Opisz błąd własnymi słowami — wystarczy krótki opis. Reszta pól jest opcjonalna.
         Zgłoszenie trafi na tablicę projektu jako zadanie typu **Bug**.
 
   - type: textarea
     id: what-happened
     attributes:
       label: Co się stało?
-      description: Opisz faktyczne zachowanie gry.
+      description: Opisz faktyczne zachowanie gry. To pole jest wymagane.
       placeholder: "Np. po skoku na krawędź platformy postać przenika przez podłogę."
     validations:
       required: true
 
   - type: textarea
-    id: expected
+    id: details
     attributes:
-      label: Co powinno się stać?
-      placeholder: "Np. postać powinna wylądować na platformie."
-    validations:
-      required: true
-
-  - type: textarea
-    id: steps
-    attributes:
-      label: Kroki do powtórzenia
-      description: Numerowana lista, najlepiej od uruchomienia gry.
+      label: Szczegóły (opcjonalnie)
+      description: Co powinno się stać, jak powtórzyć błąd, środowisko, logi — jeśli chcesz je dopisać.
       placeholder: |
-        1. Uruchom scenę ...
-        2. Przeskocz na ...
-        3. ...
-    validations:
-      required: true
-
-  - type: input
-    id: version
-    attributes:
-      label: Wersja / commit
-      description: Numer commita, gałąź albo wersja wydania.
-      placeholder: "np. main @ 90fda4f"
-    validations:
-      required: false
-
-  - type: textarea
-    id: environment
-    attributes:
-      label: Środowisko
-      description: System, wersja Godota (4.7.2), wersja .NET.
-      placeholder: "Windows 11, Godot 4.7.2 .NET, .NET 8.0.x"
-    validations:
-      required: true
-
-  - type: textarea
-    id: logs
-    attributes:
-      label: Logi / błąd z konsoli
-      description: Wklej treść błędu z okna Output lub konsoli.
-      render: shell
+        Co powinno się stać: ...
+        Kroki do powtórzenia: ...
+        Środowisko: Windows 11, Godot 4.7.2 .NET
+        Logi: ...
     validations:
       required: false
 
   - type: textarea
     id: media
     attributes:
-      label: Zrzuty ekranu / nagranie
+      label: Zrzuty ekranu / nagranie (opcjonalnie)
       description: Przeciągnij pliki tutaj albo opisz, co widać.
     validations:
       required: false
-
-  - type: checkboxes
-    id: checks
-    attributes:
-      label: Zanim wyślesz
-      options:
-        - label: Sprawdziłem, czy taki błąd nie został już zgłoszony.
-          required: true
-        - label: Rozumiem, że zgłoszenie zostanie dodane do tablicy projektu.
-          required: true
