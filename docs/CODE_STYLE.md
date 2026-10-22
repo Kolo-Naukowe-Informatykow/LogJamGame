@@ -220,6 +220,7 @@ Zasady:
 ```text
 LogJamGame/
 ├── Assets/                     # Zasoby: grafika, audio, modele 3D, fonty (Git LFS)
+│   ├── CREDITS.md              # Rejestr zewnętrznych assetów: autor, źródło, licencja
 │   ├── Textures/
 │   ├── Models/
 │   ├── Audio/
@@ -229,6 +230,7 @@ LogJamGame/
 │   ├── Managers/               # Autoloady / singletony (GameManager, AudioManager)
 │   ├── Shaders/                # Shadery
 │   └── UI/                     # Menu główne, HUD, elementy UI
+├── docs/                       # Dokumentacja projektu (SETUP, CONTRIBUTING, CODE_STYLE, RELEASING)
 ├── project.godot
 ├── LogJamGame.sln
 └── LogJamGame.csproj

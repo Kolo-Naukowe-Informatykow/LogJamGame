@@ -25,24 +25,28 @@ Otwarty, zespołowy projekt gry tworzony w ramach działalności **Koła Naukowe
 
 | Zasada | W skrócie |
 |---|---|
-| **Zadania** | Tablica w [GitHub Projects](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects). Wybierasz zadanie, przypisujesz się, przenosisz kartę na *In progress*. |
+| **Zadania** | Tablica w [GitHub Projects #6](https://github.com/orgs/Kolo-Naukowe-Informatykow/projects/6). Każde zadanie to issue typu **Bug** albo **Feature**. Wybierasz zadanie, przypisujesz się, przenosisz kartę na *In progress*. |
 | **Zmiany** | Zawsze przez Pull Request do `main`. Nikt nie pushuje bezpośrednio do `main`. |
+| **Gałęzie** | Tylko `bug/<numer>_<nazwa>` i `feature/<numer>_<nazwa>`, tworzone z issue. Inne nazwy blokuje ruleset, a check `issue-branch` pilnuje numeru i typu issue. |
 | **Review** | Minimum **2 zatwierdzenia**, w tym **co najmniej jedno od osoby nadzorującej projekt**. |
 | **CI** | Każdy pull request i push do `main` buduje się automatycznie (GitHub Actions). Czerwony build blokuje merge. |
+| **Wydania** | Każdy push do `main` publikuje nowe wydanie z buildami na Windows/Linux/macOS i changelogiem z commitów. Szczegóły: [docs/RELEASING.md](docs/RELEASING.md). |
 | **Testy** | Po zatwierdzeniu zmiany ktoś realnie uruchamia grę/scenę i sprawdza działanie. Nie każdy task, ale regularnie. |
 | **Błędy** | Zgłaszamy jako **issue** na GitHubie (z krokami do powtórzenia). Nie naprawiamy błędów „po cichu”. |
 | **AI** | **Kod napisany przez AI oznaczamy komentarzem.** Zabronione jest generowanie assetów (grafiki, dźwięku, modeli, fontów). Projekt ma uczyć — AI nie może zrobić zadania za nas. |
 
-Szczegóły: [CONTRIBUTING.md](CONTRIBUTING.md).
+Szczegóły: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
 ## Dokumentacja projektu
 
 | Plik | Do czego służy |
 |---|---|
-| [SETUP.md](SETUP.md) | Instalacja narzędzi, klonowanie, uruchomienie gry u siebie, rozwiązywanie problemów |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Jak wziąć zadanie, jak zrobić pull request, review, testy, zgłaszanie błędów |
-| [CODE_STYLE.md](CODE_STYLE.md) | Zasady pisania kodu: nazewnictwo, formatowanie, struktura plików, znacznik kodu z AI |
+| [docs/SETUP.md](docs/SETUP.md) | Instalacja narzędzi, klonowanie, uruchomienie gry u siebie, rozwiązywanie problemów |
+| [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | Jak wziąć zadanie, jak zrobić pull request, review, testy, zgłaszanie błędów |
+| [docs/CODE_STYLE.md](docs/CODE_STYLE.md) | Zasady pisania kodu: nazewnictwo, formatowanie, struktura plików, znacznik kodu z AI |
 | [AGENTS.md](AGENTS.md) | Zasady dla asystentów AI (Copilot i inne) pracujących w tym repo |
+| [docs/RELEASING.md](docs/RELEASING.md) | Automatyczne wydania, numeracja wersji i changelog |
+| [Assets/CREDITS.md](Assets/CREDITS.md) | Rejestr zewnętrznych assetów: autor, źródło i licencja |
 
 ## Szybki start
 
@@ -57,13 +61,14 @@ Następnie otwórz folder w **Godot Engine (.NET)** → *Import* → *Import & E
 
 > Projekt nie ma jeszcze sceny głównej, więc przy pierwszym <kbd>F5</kbd> Godot zapyta, którą scenę uruchomić. To normalne, dopóki nie powstanie pierwsza scena gry.
 
-Pełna instrukcja (Windows/macOS/Linux, VS Code, debugowanie, typowe błędy): [SETUP.md](SETUP.md).
+Pełna instrukcja (Windows/macOS/Linux, VS Code, debugowanie, typowe błędy): [docs/SETUP.md](docs/SETUP.md).
 
 ## Struktura repozytorium
 
 ```text
 LogJamGame/
 ├── Assets/                     # Zasoby: grafika, audio, modele 3D, fonty (przez Git LFS)
+│   ├── CREDITS.md              # Rejestr assetów: autor, źródło, licencja
 │   ├── Textures/
 │   ├── Models/
 │   ├── Audio/
@@ -73,6 +78,11 @@ LogJamGame/
 │   ├── Managers/               # Autoloady / singletony (GameManager, AudioManager, ...)
 │   ├── Shaders/                # Shadery
 │   └── UI/                     # Menu główne, HUD, elementy UI
+├── docs/                       # Dokumentacja projektu
+│   ├── SETUP.md
+│   ├── CONTRIBUTING.md
+│   ├── CODE_STYLE.md
+│   └── RELEASING.md
 ├── project.godot               # Plik projektu Godota
 ├── LogJamGame.sln
 ├── LogJamGame.csproj
@@ -81,9 +91,11 @@ LogJamGame/
 
 Nowe podfoldery w `Source/` tworzymy tematycznie i tylko wtedy, gdy mamy co do nich wrzucić (np. `Source/Player/`, `Source/Enemies/`) — to jedna gra, nie ma podziału na osobne moduły. Konfigurację swojego edytora trzymamy lokalnie: katalog `.vscode/` jest w `.gitignore`, więc nic z Twoich ustawień nie trafi do repozytorium.
 
-Zasady nazewnictwa i tego, co gdzie trafia, opisuje [CODE_STYLE.md](CODE_STYLE.md).
+Zasady nazewnictwa i tego, co gdzie trafia, opisuje [docs/CODE_STYLE.md](docs/CODE_STYLE.md).
 
 ## Licencja
 
 Projekt nie ma jeszcze wybranej licencji (do ustalenia przez koło). Do momentu jej ustalenia kod jest udostępniany wyłącznie na potrzeby pracy w kole naukowym.
+
+Zewnętrzne assety mają własne licencje — ich autorzy, źródła i warunki są zebrane w [Assets/CREDITS.md](Assets/CREDITS.md).
 

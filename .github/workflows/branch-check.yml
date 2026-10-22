@@ -1,0 +1,61 @@
+name: Branch check
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  issue-branch:
+    name: issue-branch
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Sprawdź nazwę gałęzi i powiązane issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.head_ref }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          pattern='^(bug|feature)/([0-9]+)_[a-z0-9][a-z0-9._-]*$'
+
+          if [[ ! "$BRANCH" =~ $pattern ]]; then
+            echo "::error::Niepoprawna nazwa gałęzi: '$BRANCH'."
+            echo "::error::Wymagany format: bug/<numer>_<nazwa> albo feature/<numer>_<nazwa> (małe litery, cyfry, kropka, myślnik, podkreślenie)."
+            exit 1
+          fi
+
+          kind="${BASH_REMATCH[1]}"
+          number="${BASH_REMATCH[2]}"
+
+          issue="$(gh api "repos/$REPO/issues/$number" 2>/dev/null || true)"
+
+          if [ -z "$issue" ]; then
+            echo "::error::Issue #$number nie istnieje w $REPO. Gałąź musi powstać z issue."
+            exit 1
+          fi
+
+          state="$(jq -r '.state' <<< "$issue")"
+          type="$(jq -r '.type.name // empty' <<< "$issue")"
+
+          if [ "$state" != "open" ]; then
+            echo "::error::Issue #$number nie jest otwarte (state: $state)."
+            exit 1
+          fi
+
+          expected="Feature"
+          if [ "$kind" = "bug" ]; then
+            expected="Bug"
+          fi
+
+          if [ "$type" != "$expected" ]; then
+            echo "::error::Issue #$number ma typ '$type', a gałąź zaczyna się od '$kind/'. Oczekiwano typu '$expected'."
+            exit 1
+          fi
+
+          echo "OK: $BRANCH → issue #$number ($type)"
