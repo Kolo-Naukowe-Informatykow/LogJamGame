@@ -47,15 +47,28 @@ Kolumny:
 | **Ready** | Zadanie gotowe do wzięcia: ma opis, zakres i kryteria akceptacji |
 | **In progress** | Ktoś nad nim pracuje (przypisany assignee) |
 | **In review** | Otwarty pull request, trwa review |
-| **Testing** | Zmiana zatwierdzona, ktoś ją testuje na swoim komputerze |
+| **Test** | Zmiana zatwierdzona, ktoś ją testuje na swoim komputerze |
 | **Done** | Zmergowane i przetestowane |
+
+Statusy zmieniamy ręcznie:
+
+| Moment | Status |
+|---|---|
+| Zaczynasz pracę / tworzysz gałąź | **In progress** (przypisz się do issue) |
+| Otwierasz PR | **In review** (możesz odpiąć się od issue) |
+| PR zmergowany | **Test** (issue zostaje otwarte do testów) |
+| Testy zakończone | **Done** (zamknij issue) |
 
 Zasady:
 
-- Bierzesz zadanie → **przypisz się** do issue/karty i przenieś kartę na *In progress*. Nie pracujemy w dwóch nad tym samym.
+- **Backlog → Ready**: gdy zadanie ma już opis i da się je wziąć, przenieś kartę na *Ready*.
+- **Bierzesz zadanie**: przypisz się do issue i przenieś kartę na *In progress*. Nie pracujemy w dwóch nad tym samym.
+- **Otwierasz PR**: przenieś kartę na *In review*. Możesz odpiąć się od issue, jeśli ktoś inny przejmuje review.
+- **Merge**: przenieś kartę na *Test*, a issue zostaw otwarte do testów.
+- **Po testach**: zamknij issue — wbudowany workflow ustawi *Done* (albo ustaw je ręcznie).
+- **PR zamknięty bez merge**: wróć kartą na *In progress*.
 - Zadanie jest niejasne → pytaj na Discordzie, doprecyzujemy opis (zamiast zgadywać).
 - Zadanie jest za duże → podziel je na mniejsze i zgłoś to w komentarzu.
-- Otwarty PR → przenieś kartę na *In review* i pilnuj, żeby nie wisiała bez ruchu dłużej niż kilka dni.
 
 ## Zgłaszanie błędów (issue)
 
