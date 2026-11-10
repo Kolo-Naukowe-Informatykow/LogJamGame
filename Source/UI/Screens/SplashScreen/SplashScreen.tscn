@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://br7juqk5ux8ne"]
+
+[ext_resource type="Script" uid="uid://cfwcs4ptw7ase" path="res://Source/UI/Screens/SplashScreen/SplashScreen.cs" id="1_nojaa"]
+[ext_resource type="Texture2D" uid="uid://c66p13tbyyq5t" path="res://Assets/Textures/SplashScreen/kni+godot.svg" id="2_2w63s"]
+[ext_resource type="PackedScene" uid="uid://dvi0e8ntv85g2" path="res://Source/Tmp/Scenes/TestScene.tscn" id="2_pumkg"]
+
+[node name="SplashScreen" type="Control" unique_id=2117179789]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nojaa")
+NextScene = ExtResource("2_pumkg")
+
+[node name="Background" type="ColorRect" parent="." unique_id=49085145]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.050980393, 0.050980393, 0.050980393, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=15935668]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Logo" type="TextureRect" parent="MarginContainer" unique_id=1915251514]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_2w63s")
+expand_mode = 5
+stretch_mode = 3
