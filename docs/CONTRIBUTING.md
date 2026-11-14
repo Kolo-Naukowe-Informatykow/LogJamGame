@@ -281,7 +281,7 @@ Zasady z tego dokumentu mają być wymuszone przez GitHuba, żeby nie zależeć 
 | Block force pushes / uniemożliwienie usunięcia gałęzi | ✅ |
 | Do not allow bypassing the above settings | ✅ |
 
-**Osoby nadzorujące (code owners):** zespół [`@Kolo-Naukowe-Informatykow/maintainers`](https://github.com/orgs/Kolo-Naukowe-Informatykow/teams/maintainers) — @6ajmon, @Sobgo, @krasnykid. Repozytorium ma włączone **Require review from Code Owners**, więc jedno z dwóch zatwierdzeń musi pochodzić od członka tego zespołu. GitHub automatycznie przypisuje jednego członka zespołu do PR (round robin) i — dzięki ustawieniu **Only notify requested team members** — powiadamia tylko tę osobę, a nie cały zespół. Nadal możesz poprosić o review konkretną osobę przez **Reviewers**.
+**Osoby nadzorujące (code owners):** zespół [`@Kolo-Naukowe-Informatykow/maintainers`](https://github.com/orgs/Kolo-Naukowe-Informatykow/teams/maintainers) — @sighmonk, @Sobgo, @krasnykid. Repozytorium ma włączone **Require review from Code Owners**, więc jedno z dwóch zatwierdzeń musi pochodzić od członka tego zespołu. GitHub automatycznie przypisuje jednego członka zespołu do PR (round robin) i — dzięki ustawieniu **Only notify requested team members** — powiadamia tylko tę osobę, a nie cały zespół. Nadal możesz poprosić o review konkretną osobę przez **Reviewers**.
 
 **Stan:** ochrona gałęzi `main` jest włączona w *Settings → Branches*. Check `issue-branch` jest tylko informacyjny (nie jest wymagany). Repozytorium jest publiczne, a GitHub udostępnia te funkcje dla publicznych repozytoriów bezpłatnie (dla prywatnych część wymagałaby płatnego planu). Ustawienia zmienia wyłącznie administrator i nie wyłączamy ich „na chwilę”, żeby coś szybko wrzucić — od tego jest gałąź i PR.
 
