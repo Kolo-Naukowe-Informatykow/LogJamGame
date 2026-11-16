@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c8j87jteqxbdt"]
+
+[ext_resource type="Script" uid="uid://bdjm63ueh816d" path="res://Source/Tmp/TestEnemy.cs" id="1_6j4ra"]
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_t202x"]
+[ext_resource type="Script" uid="uid://dk34jpxhqiiv6" path="res://Source/Tmp/Health.cs" id="3_c706v"]
+[ext_resource type="Script" uid="uid://c8v5apvwum3ib" path="res://Source/Tmp/HealthBar.cs" id="4_vq4e5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sdrnp"]
+size = Vector2(82, 82)
+
+[node name="TestEnemy" type="CharacterBody2D" unique_id=2106723016]
+script = ExtResource("1_6j4ra")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=393166563]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("2_t202x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1791768649]
+shape = SubResource("RectangleShape2D_sdrnp")
+
+[node name="Health" type="Node" parent="." unique_id=617429715]
+script = ExtResource("3_c706v")
+
+[node name="HealtBar" type="Node2D" parent="." unique_id=1182122462 node_paths=PackedStringArray("_health")]
+script = ExtResource("4_vq4e5")
+_health = NodePath("../Health")

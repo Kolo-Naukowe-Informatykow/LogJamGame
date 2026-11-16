@@ -49,7 +49,7 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 - Never push directly to `main`, never force-push a shared branch, never merge a pull request (2 approvals are required, at least one from a maintainer).
 - Create branches from issues and keep GitHub's default name `<issue-number>-<slug>` (e.g. `6-temporary-test-scene`). The `issue-branch` check is advisory: it warns about naming or issue problems but does not block merges.
 - Do not change project scaffolding — `LogJamGame.csproj`, `LogJamGame.sln`, `project.godot`, the assembly/namespace name, or the folder layout — unless explicitly asked.
-- Do not hand-edit `.tscn`, `.tres` or `project.godot` files. Describe the exact editor steps instead (node path, property, value), so a human performs it in the Godot editor.
+- Do not hand-edit `.tscn`, `.tres` or `project.godot` files. Describe the exact editor steps instead (node path, property, value), so a human performs it in the Godot editor — format described in [Zmiany w scenach](#zmiany-w-scenach-instrukcja-nie-edycja-plików).
 - Do not add NuGet packages or new tooling without asking first.
 - Do not reformat or "clean up" unrelated code, and do not fix unrelated pre-existing issues. Keep diffs minimal and focused.
 
@@ -64,6 +64,26 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 - Prefer composition over inheritance; keep autoloads/managers rare.
 - Place a scene's own script next to its `.tscn` file; shared code goes into `Source/Components/`.
 - This is a single game (no module/platform folders): new gameplay folders are created theme-wise under `Source/` only when there is something to put in them.
+
+## Zmiany w scenach: instrukcja, nie edycja plików
+
+Plików `.tscn`, `.tres` i `project.godot` **nie edytujemy** — ani ręcznie, ani przez agenta,
+ani przez „szybką poprawkę diffa". Jeżeli zadanie wymaga zmiany w scenie (nowy węzeł,
+właściwość, sygnał, Input Map, autoload), zamiast pisać do pliku:
+
+1. Wskaż plik sceny (`res://...`) i węzeł, którego zmiana dotyczy.
+2. Wypisz kroki do wykonania w edytorze Godota: typ węzła, jego nazwa, rodzic w drzewie,
+   właściwość i wartość — np. `TestPlayer → Health (Node) → Max Health = 100`.
+3. Napisz jednym zdaniem, po co ta zmiana jest, i jak sprawdzić, że działa.
+4. Jeżeli bez tej zmiany kod nie zadziała, powiedz to wprost i poczekaj, aż człowiek
+   wykona kroki — nie obchodź tego edycją pliku ani „obejściem" w C#.
+
+Ta sama zasada dotyczy `project.godot`: ustawienia projektu i Input Map opisujemy jako
+kliknięcia w *Project → Project Settings*, a nie jako diff w pliku.
+
+Kod C# **może** natomiast tworzyć węzły w czasie działania gry (`AddChild`, `new ...`), gdy
+scena jest budowana proceduralnie — wtedy w `.tscn` nie ma żadnych zmian i to jest
+preferowany sposób na prototypy oraz narzędzia debug (patrz `Source/Tmp/`).
 
 ## Build, run and verify
 
