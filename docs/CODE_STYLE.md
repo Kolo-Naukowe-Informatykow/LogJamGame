@@ -98,7 +98,21 @@ Wszystko, co się da, jest już zapisane w `.editorconfig`. Najważniejsze punkt
 - Zawsze nawiasy klamrowe w `if`/`for`/`while`, nawet przy jednej instrukcji.
 - Namespace zapisujemy **w formie `file-scoped`** (średnik zamiast klamerek).
 - Dyrektywy `using` na górze pliku, `System.*` pierwsze.
-- Linia nie dłuższa niż ~120 znaków.
+- Linia nie dłuższa niż ~120 znaków. Wyjątek: atrybuty bez argumentów (patrz niżej).
+- **Atrybuty z argumentami** zapisujemy w osobnej linii nad deklaracją, z tym samym wcięciem:
+
+  ```csharp
+  [Export(PropertyHint.Range, "0,10,0.05")]
+  public float FadeInSeconds { get; set; } = 0.8f;
+  ```
+
+- **Atrybuty bez argumentów** (`[Export]`, `[Tool]`, `[GlobalClass]`) zostawiamy **w linii** przed deklaracją — nawet gdy przez to linia przekroczy 120 znaków:
+
+  ```csharp
+  [Export] public PackedScene NextScene { get; set; }
+  ```
+
+- Kilka atrybutów na jednym członku — każdy w swojej linii.
 - Jedna instrukcja w linii; puste linie tylko do rozdzielenia logicznych bloków.
 
 Kolejność składowych w klasie: pola → konstruktor → właściwości → metody publiczne → metody Godota (`_Ready`, `_Process`, `_PhysicsProcess`, `_Input`) → metody prywatne.
