@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d2u6hwxcodkbo"]
+
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_7pfti"]
+[ext_resource type="Script" uid="uid://bvx8d6w7hfvw7" path="res://Source/Tmp/TestPlayer.cs" id="1_omfm1"]
+[ext_resource type="Script" uid="uid://dk34jpxhqiiv6" path="res://Source/Tmp/Health.cs" id="4_nirka"]
+[ext_resource type="Script" uid="uid://c8v5apvwum3ib" path="res://Source/Tmp/HealthBar.cs" id="5_xebjf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pfti"]
+size = Vector2(124, 127)
+
+[node name="TestPlayer" type="CharacterBody2D" unique_id=1752319538]
+script = ExtResource("1_omfm1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=74442358]
+texture = ExtResource("1_7pfti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=290394949]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_7pfti")
+
+[node name="Health" type="Node" parent="." unique_id=1355123012]
+script = ExtResource("4_nirka")
+
+[node name="HealtBar" type="Node2D" parent="." unique_id=1717603470 node_paths=PackedStringArray("_health")]
+script = ExtResource("5_xebjf")
+_health = NodePath("../Health")
