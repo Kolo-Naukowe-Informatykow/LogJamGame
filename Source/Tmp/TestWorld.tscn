@@ -7,11 +7,11 @@
 [node name="TestWorld" type="Node2D" unique_id=372527101]
 script = ExtResource("1_ssebx")
 _enemyScene = ExtResource("2_lus6k")
+_arenaSize = Vector2(3200, 3200)
 
 [node name="TestPlayer" parent="." unique_id=1752319538 instance=ExtResource("1_wibub")]
 position = Vector2(194, 183)
 
 [node name="Camera2D" type="Camera2D" parent="TestPlayer" unique_id=984060524]
-zoom = Vector2(0.7, 0.7)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
